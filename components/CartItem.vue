@@ -28,7 +28,7 @@
 			<div class="pr-8 ">
 				<button
 					class="flex text-white bg-red-500 border-0 py-1 px-4 hover:bg-red-600 focus:outline-none rounded"
-					@click="removeAllProduct(id)"
+					@click="removeAllProduct(id, count)"
 				>
 					Удалить
 				</button>
@@ -63,12 +63,16 @@
 		methods: {
 			addProduct (productId) {
 				this.$store.commit('cart/addProduct', productId)
+				this.$store.commit('globalCart/addProduct', +productId);
 			},
 			removeProduct (productId) {
 				this.$store.commit('cart/removeProduct', productId)
+				this.$store.commit('globalCart/removeProduct', +productId);
 			},
-			removeAllProduct(productId) {
+			removeAllProduct(productId, count) {
 				this.$store.commit('cart/removeAllProduct', productId)
+				for(let i = 0; i < count; i++)
+					this.$store.commit('globalCart/removeProduct', +productId);
 			}
 		}
 	}

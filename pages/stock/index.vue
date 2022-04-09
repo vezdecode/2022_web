@@ -8,7 +8,7 @@
 			:imageUrl="i.imageUrl.toString()"
 			:id="i.id"
 			:count="i.count"
-			startLink="/products/" />
+			startLink="/stock/" />
 	</main>
 </template>
 <script>

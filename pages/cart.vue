@@ -47,7 +47,6 @@
 				const products = this.$store.state.products.products;
 
 				this.$store.state.cart.cart.forEach((i) => {
-					console.log(cart);
 					if(cart.find((j) => j.id === i))
 						cart[cart.indexOf(cart.find((j) => j.id === i))].count++;
 					else

@@ -12,7 +12,8 @@ export const mutations = {
 		state.products[index].description = updatedProduct.description;
 		state.products[index].imageUrl = updatedProduct.imageUrl;
 		state.products[index].price = +updatedProduct.price;
+		state.products[index].count = +updatedProduct.count;
 
-		sessionStorage.setItem('products', JSON.stringify(state.products));
+		localStorage.setItem('products', JSON.stringify(state.products));
 	}
 };
