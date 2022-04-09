@@ -15,7 +15,7 @@
 					{{ title }}
 				</p>
 				<p class="text-gray-800 text-xl font-medium mb-2">
-					{{ price }} $
+					{{ isAuction ? 'Аукцион' : price + ' $' }}
 				</p>
 				<p class="text-gray-800 text-xl font-medium mb-2">
 					{{ count === 0 ? 'Нет в наличии' : count + ' шт. в наличии'}}
@@ -27,30 +27,13 @@
 <script>
 export default {
 	props: {
-		id: {
-			type: Number,
-			required: true,
-		},
-		imageUrl: {
-			type: String,
-			required: true,
-		},
-		title: {
-			type: String,
-			required: true,
-		},
-		price: {
-			type: Number,
-			required: true,
-		},
-		count: {
-			type: Number,
-			required: true,
-		},
-		startLink: {
-			type: String,
-			required: true,
-		},
+		id: Number,
+		imageUrl: String,
+		title: String,
+		price: Number,
+		count: Number,
+		isAuction: Boolean,
+		startLink: String,
 	},
 	methods: {
 		onDrag(event, itemId) {

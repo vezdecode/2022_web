@@ -10,19 +10,19 @@
 		</div>
 		<div class="flex justify-center items-center">
 			<div class="pr-8 flex ">
-				<button @click="removeProduct(id)" class="font-semibold">
+				<button @click="removeProduct(id)" :class="'font-semibold ' + (isAuction && 'hidden')">
 					-
 				</button>
 				<p class="bg-gray-100 border h-6 w-8 rounded text-center text-sm px-2 mx-2">
 					{{ count }}
 				</p>
-				<button @click="addProduct(id)" class="font-semibold">
+				<button @click="addProduct(id)" :class="'font-semibold ' + (isAuction && 'hidden')">
 					+
 				</button>
 			</div>
 			<div class="pr-8 ">
 				<span class="text-xs font-medium">
-					{{ price * count }} $
+					{{ isAuction ? 'Аукцион' : '' }} {{ price * count }} $
 				</span>
 			</div>
 			<div class="pr-8 ">
@@ -39,38 +39,30 @@
 <script>
 	export default {
 		props: {
-			id: {
-				type: Number,
-				required: true,
-			},
-			imageUrl: {
-				type: String,
-				required: true,
-			},
-			title: {
-				type: String,
-				required: true,
-			},
-			price: {
-				type: Number,
-				required: true,
-			},
-			count: {
-				type: Number,
-				required: true,
-			}
+			id: Number,
+			imageUrl: String,
+			title: String,
+			price: Number,
+			count: Number,
+			isAuction: Boolean,
 		},
 		methods: {
 			addProduct (productId) {
-				this.$store.commit('cart/addProduct', productId)
+				this.$store.commit('cart/addProduct', productId);
 				this.$store.commit('globalCart/addProduct', +productId);
 			},
 			removeProduct (productId) {
-				this.$store.commit('cart/removeProduct', productId)
+				this.$store.commit('cart/removeProduct', productId);
 				this.$store.commit('globalCart/removeProduct', +productId);
+				this.$store.commit('cart/setCustomPrice', {
+					id: productId,
+					price: null,
+				});
 			},
 			removeAllProduct(productId, count) {
-				this.$store.commit('cart/removeAllProduct', productId)
+				this.$store.commit('cart/removeAllProduct', productId);
+				this.$store.commit('cart/setCustomPrices');
+				
 				for(let i = 0; i < count; i++)
 					this.$store.commit('globalCart/removeProduct', +productId);
 			}

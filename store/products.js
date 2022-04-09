@@ -13,6 +13,7 @@ export const mutations = {
 		state.products[index].imageUrl = updatedProduct.imageUrl;
 		state.products[index].price = +updatedProduct.price;
 		state.products[index].count = +updatedProduct.count;
+		state.products[index].isAuction = !!updatedProduct.isAuction;
 
 		localStorage.setItem('products', JSON.stringify(state.products));
 	}

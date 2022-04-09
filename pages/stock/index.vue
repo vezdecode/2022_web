@@ -8,6 +8,7 @@
 			:imageUrl="i.imageUrl.toString()"
 			:id="i.id"
 			:count="i.count"
+			:isAuction="i.isAuction"
 			startLink="/stock/" />
 	</main>
 </template>

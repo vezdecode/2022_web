@@ -1,5 +1,5 @@
 <template>
-	<div id="app">
+	<div id="app" class="relative">
 		<app-header/>
 		<nuxt/>
 	</div>
@@ -22,6 +22,9 @@ export default {
 				this.$store.commit('cart/setCart', JSON.parse(sessionStorage.getItem('cart')));
 			else
 				sessionStorage.setItem('cart', '[]');
+
+			if(sessionStorage.getItem('custom_price'))
+				this.$store.commit('cart/setCustomPrices', JSON.parse(sessionStorage.getItem('custom_price')));
 
 			if(localStorage.getItem('global_cart'))
 				this.$store.commit('globalCart/setCart', JSON.parse(localStorage.getItem('global_cart')));
@@ -52,6 +55,11 @@ export default {
 
 				localStorage.setItem('cards_pos', JSON.stringify(products.map((i) => i.id)));
 			}
+
+			if(localStorage.getItem('auctions'))
+				this.$store.commit('auction/setAuctions', JSON.parse(localStorage.getItem('auctions')));
+			if(sessionStorage.getItem('my_auctions'))
+				this.$store.commit('auction/setMyAuctions', JSON.parse(sessionStorage.getItem('my_auctions')));
 		}
 	},
 }

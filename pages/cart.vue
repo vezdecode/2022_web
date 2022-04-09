@@ -12,6 +12,7 @@
 								:title="i.title"
 								:imageUrl="i.imageUrl"
 								:price="i.price"
+								:is-auction="i.isAuction"
 								:count="i.count"
 								:id="i.id" />
 							<div class="flex justify-between items-center mt-6 pt-6 border-t">
@@ -45,6 +46,7 @@
 			cart () {
 				let cart = [];
 				const products = this.$store.state.products.products;
+				const customPrice = this.$store.state.cart.customPrice;
 
 				this.$store.state.cart.cart.forEach((i) => {
 					if(cart.find((j) => j.id === i))
@@ -53,7 +55,12 @@
 						cart.push({ ...products.find((j) => j.id === i), count: 1});
 				});
 
-				return cart;
+				return cart.map((i) => {
+					if(customPrice[i.id])
+						return {...i, price: customPrice[i.id], isAuction: true};
+					else
+						return {...i, isAuction: false};
+				});
 			}
 		},
 	}
