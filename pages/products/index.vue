@@ -32,7 +32,7 @@
 						products.push(i);
 				});
 				
-				return products;
+				return products.filter((i) => i.count);
 			}
 		},
 	}

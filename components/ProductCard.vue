@@ -1,7 +1,15 @@
 <template>
 	<div class="overflow-hidden shadow-lg rounded-lg h-90 w-60 md:w-80 cursor-pointer m-auto">
-		<a :href="startLink + id" class="w-full block h-full">
-			<img alt="product photo" :src="imageUrl" class="max-h-40 w-full object-cover"/>
+		<a
+			:href="startLink + id"
+			class="w-full block h-full"
+			draggable="true"
+			@dragstart="onDrag($event, id)"
+			@drop="onDrop($event, id)"
+			@dragover.prevent
+			@dragenter.prevent
+		>
+			<img alt="product photo" :src="imageUrl" class="max-h-40 w-full object-cover" draggable="false"/>
 			<div class="bg-white w-full p-4">
 				<p class="text-indigo-500 text-md font-medium">
 					{{ title }}
@@ -42,6 +50,14 @@ export default {
 		startLink: {
 			type: String,
 			required: true,
+		},
+	},
+	methods: {
+		onDrag(event, itemId) {
+			event.dataTransfer.setData('itemId', itemId);
+		},
+		onDrop(event, itemId) {
+			this.$store.commit('dnd/moveCard', [event.dataTransfer.getData('itemId'), itemId]);
 		}
 	}
 }

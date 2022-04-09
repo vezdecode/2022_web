@@ -27,6 +27,31 @@ export default {
 				this.$store.commit('globalCart/setCart', JSON.parse(localStorage.getItem('global_cart')));
 			else
 				localStorage.setItem('global_cart', '[]');
+
+			if(localStorage.getItem('cards_pos'))
+				this.$store.commit('dnd/setCards', JSON.parse(localStorage.getItem('cards_pos')));
+			else {
+				let products = [];
+				this.$store.state.globalCart.cart.forEach((i) => {
+					const item = this.$store.state.products.products.find((j) => j.id === i);
+					if(!products.find((j) => j.id === i)) {
+						products.push({
+							...item,
+							count: item.count - 1,
+						});
+					}
+					else
+						products.find((j) => j.id === i).count--;
+				});
+				this.$store.state.products.products.forEach((i) => {
+					if(!products.find((j) => j.id === i.id))
+						products.push(i);
+				});
+
+				this.$store.commit('dnd/setCards', products.map((i) => i.id));
+
+				localStorage.setItem('cards_pos', JSON.stringify(products.map((i) => i.id)));
+			}
 		}
 	},
 }

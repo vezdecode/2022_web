@@ -1,7 +1,7 @@
 <template>
 	<main class="flex flex-wrap gap-3 py-12 px-4">
 		<product-card
-			v-for="(i, index) in products"
+			v-for="(i, index) in sortedCards.filter((i) => products.find((j) => j.id === i)).map((i) => products.find((j) => j.id === i))"
 			:key="index"
 			:title="i.title"
 			:price="i.price"
@@ -32,7 +32,10 @@
 						products.push(i);
 				});
 				
-				return products;
+				return products.filter((i) => i.count);
+			},
+			sortedCards () {
+				return this.$store.state.dnd.cardsPositions;
 			}
 		},
 	}
