@@ -48,8 +48,23 @@
 		},
 		methods: {
 			addProduct (productId) {
-				this.$store.commit('cart/addProduct', productId);
-				this.$store.commit('globalCart/addProduct', +productId);
+				let products = [];
+				this.$store.state.globalCart.cart.forEach((i) => {
+					const item = this.$store.state.products.products.find((j) => j.id === i);
+					if(!products.find((j) => j.id === i)) {
+						products.push({
+							...item,
+							count: item.count - 1,
+						});
+					}
+					else
+						products.find((j) => j.id === i).count--;
+				});
+
+				if(products.find((i) => i.id === productId).count > 0) {
+					this.$store.commit('cart/addProduct', productId);
+					this.$store.commit('globalCart/addProduct', +productId);
+				}
 			},
 			removeProduct (productId) {
 				this.$store.commit('cart/removeProduct', productId);
